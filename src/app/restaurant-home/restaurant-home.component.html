@@ -1,0 +1,43 @@
+<br>
+<br>
+<br>
+<br>
+<div id="butn">
+    <button type="button" id="button1" class="btn btn-primary" routerLink="/restaurant">
+        Register Restaurant
+      </button>
+      &nbsp; &nbsp; &nbsp;
+      <button type="button" id="button2" (click)="display_restaurant()" class="btn btn-primary">
+        View Restaurant
+      </button>
+</div>
+<router-outlet></router-outlet>
+
+<div class="container mt-5" *ngIf="show_restaurant">
+    <table class="table table-hover table-striped">
+      <thead>
+        <tr class="text-primary text-center font-weight-bold">
+          <th scope="col">S.No</th>
+          <th scope="col">Restaurant Name</th>
+          <th scope="col">Opening Time</th>
+          <th scope="col">Closing Time</th>
+          <th scope="col">Address</th>
+          <th scope="col">Dishes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let restaurant of register_restaurants; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td> {{restaurant.name}}</td>
+          <td>{{restaurant.openinghrs}}</td>
+          <td>{{restaurant.closinghrs}}</td>
+          <td>{{restaurant.address}}</td>
+          <td>
+            <button type="button" (click)="add_products(restaurant._id)" class="btn btn-success">
+              See Dishes
+            </button>
+        </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
