@@ -9,15 +9,11 @@ import { RestaurantServiceService } from '../restaurant-service.service';
 })
 export class RegisterRestaurantComponent implements OnInit {
   restaurants=[];
- // open: any = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'] ;
-  //openingminList:any =[];
-  //close: any = ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'] ;
-
   restaurant_id:any;
   registration_msg_status=false;
   open: boolean= true;
   registration_message:any;
-  timingstatus= false;
+  
   constructor(private restaurantService: RestaurantServiceService, private router:Router) { }
 
   ngOnInit(): void
@@ -30,21 +26,41 @@ export class RegisterRestaurantComponent implements OnInit {
   addRestaurant(form:any)
   {
     try
-    { 
-      var opens= Number(form.restaurant_opening_hours);
-      var closes= Number (form.restaurant_closing_hours);
-      if(opens <= closes)
-      { this.timingstatus=true;
-     // form.openinghrs1
+    { console.log(form.input);
+        const openingTimeArray = form.input.split(":");
+        const closingTimeArray = form.output.split(":");
+       console.log(typeof(parseInt(openingTimeArray[0])));
+    
+      var opens=(parseInt(openingTimeArray[0]));
+      var closes=(parseInt(closingTimeArray[0]));
+      var openmin=(parseInt(openingTimeArray[1]));
+      var closemin=(parseInt(closingTimeArray[1]));
+      if(opens > closes)
+      {
+        console.log("Hours");
+        this.open= false;
+        return;
+      }
+      else if(opens == closes)
+      {
+        if(openmin >= closemin)
+        {
+          console.log("Minutes");
+          this.open= false;
+          return;
+        }
+      }
+      else
+      { 
+        var finalopen= (opens < 12) ? (form.input + " AM"):((opens-12) + ":" +(openmin)+" PM");
+        var finalclose= (closes < 12 )? (form.output + " AM"):((closes-12) +":"+ (closemin)+ " PM");
       const restaurant={
         name : form.restaurant_name,
         address: form.restaurant_address,
-        openinghrs : form.restaurant_opening_hours,
-        closinghrs: form.restaurant_closing_hours
+        openinghrs : finalopen,
+        closinghrs: finalclose
       }
-     // const openingTimeArray = restaurant.openinghrs.split(":");
-     // console.log(openingTimeArray);
-      //console.log(openingTimeArray[0]);
+    console.log(restaurant);
       this.restaurantService.addRestaurant(restaurant)
     .subscribe(
       resp=>{
@@ -63,11 +79,7 @@ export class RegisterRestaurantComponent implements OnInit {
           }
       }); 
     } 
-    else
-    {
-        this.open = false;
-      console.log("Cant enter");
-    }
+   
   
   }
     catch(e)

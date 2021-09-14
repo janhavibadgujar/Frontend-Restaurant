@@ -24,11 +24,11 @@
                     <div class="form-row">
                       <div class="form-group col-6">
                         <label for="restaurant_opening_hours">Opening Time</label>
-                        <input type="text" name="restaurant_opening_hours" class="form-control" id="restaurant_opening_hours" placeholder="Enter Opening Time" ngModel required>
+                        <input type="time" name="input" class="form-control" id="Input" placeholder="HH:mm:ss" ngModel required>
                       </div>
                       <div class="form-group col-6">
                         <label for="restaurant_closing_hours">Closing Time</label>
-                        <input type="text" name="restaurant_closing_hours" class="form-control" id="restaurant_closing_hours" placeholder="Enter Closing Time" ngModel required>
+                        <input type="time" name="output" class="form-control" id="Output" placeholder="HH:mm:ss" ngModel required>
                       </div>
                     </div>
                     <div class="form-group col-12">
@@ -37,7 +37,7 @@
                     </div>
                     <br>
                  <div class="d-flex justify-content-around">
-                      <div *ngIf="!timingstatus">
+                      <div >
                         <button type="submit" (click)="addProduct()" [disabled]="registrationdata.form.invalid" class="btn btn-primary">Register</button>
                       </div>
                      
@@ -48,7 +48,7 @@
                       </button>
                     </div>
                    
-                    </div>
+                    </div> 
                     <br>
                     <br>
                     <div *ngIf="!open">
